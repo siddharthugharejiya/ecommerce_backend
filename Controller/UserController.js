@@ -37,13 +37,13 @@ const login = async (req, res) => {
      const userdata = await UserModel.findOne({ email });
 
     if (!userdata) {
-      return res.send({ msg: "User Not register" })
+      return res.send({ data : "User Not register" })
     }
  
     const token = jwt.sign({ userId: userdata._id, userRole: userdata.role }, "SID")
     console.log(token);
 
-    return res.send({ msg: "user login successfully" , token : token })
+    return res.send({ data: "user login successfully" , token : token })
   }
   catch (error) {
     console.log(error);
