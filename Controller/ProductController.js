@@ -26,7 +26,7 @@ const addproduct = async (req, res) => {
 const Getproduct = async (req, res) => {
   try {
     
-    const data = await ProductModel.find().populate('category', 'name').populate('subcategory', 'name');
+    const data = await ProductModel.find()
 
    return res.status(200).send({ data })
   } catch (error) {
