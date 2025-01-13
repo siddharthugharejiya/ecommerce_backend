@@ -6,28 +6,28 @@ const jwt = require("jsonwebtoken")
 const Form = async (req, res) => {
   try {
     const { username, email, password, role, secretkey } = req.body;
-    
-    
-    if (role === "admin") {
-      console.log(role);
-      console.log(process.env.adminsecretkey)
-      console.log(secretkey);
-      if (process.env.adminsecretkey != secretkey) {
-        return res.send({ msg: "You are not authorized" });
-      }
-      
+
+    const oldUser = await UserModel.findOne({ email });
+    if (oldUser) {
+      return res.status(400).send({ message: "User already exists" });
     }
 
+   
+    if (role === "admin") {
+      if (process.env.ADMIN_SECRET_KEY !== secretkey) {
+        return res.status(403).send({ message: "You are not authorized" });
+      }
+    }
 
-    const data = await UserModel.create(req.body);
-    console.log(data);
-    return res.send({ data })
+    
+    const newUser = await UserModel.create({ username, email, password, role });
+    return res.status(201).send({ message: "User created successfully", data: newUser });
 
   } catch (error) {
-    console.log(error.message);
-    
+    console.error(error.message);
+    return res.status(500).send({ message: "An error occurred", error: error.message });
   }
-}
+};
 
 
 const login = async (req, res) => {
