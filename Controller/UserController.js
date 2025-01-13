@@ -1,8 +1,9 @@
-const bcrypt = require('bcryptjs')
+
 const jwt = require('jsonwebtoken');
 const UserModel = require('../Model/UserModel');
 const CategoryModel = require('../Model/CategoryModel');
 
+const bcrypt = require('bcryptjs')
 
 const Form = async (req, res) => {
   try {
