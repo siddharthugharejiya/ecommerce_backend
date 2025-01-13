@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken');
 const UserModel = require('../Model/UserModel');
-const CategoryModel = require('../Model/CategoryModel');
+
 
 const bcrypt = require('bcryptjs')
 
@@ -60,9 +60,5 @@ const login_Get = async (req, res) => {
   res.send({ data });
 };
 
-const getall_data = async (req, res) => {
-  const data = await CategoryModel.find().populate("categoryes");
-  res.send({ data });
-};
 
-module.exports = { Form, login, login_Get, getall_data };
+module.exports = { Form, login, login_Get };
