@@ -5,17 +5,17 @@ const bcrypt = require('bcryptjs');
 
 const Form = async (req, res) => {
   try {
-    console.log(process.env.ADMIN_SECRET_KEY); // Log to check the value
+    console.log(process.env.adminsecretkey)         
 
-    const { username, email, password, role, secretkey } = req.body;
+    const { username, email, password, role, secretkey } = req.body;   
     console.log(req.body);
 
     const oldUser = await UserModel.findOne({ email });
-    if (oldUser) {
+    if (oldUser) {  
       return res.status(400).send({ data: "User already exists" });
     }
 
-    if (role === "admin" && process.env.ADMIN_SECRET_KEY !== secretkey) {
+    if (role === "admin" && process.env.adminsecretkey !== secretkey) {
       return res.status(403).send({ data: "You are not authorized" });
     }
 
