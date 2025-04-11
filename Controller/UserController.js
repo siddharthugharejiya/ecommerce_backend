@@ -33,7 +33,7 @@ const Form = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const userdata = await UserModel.findOne({ email });
+    const userdata = await UserModel.findOne({ email })
 
     if (!userdata) {
       return res.status(404).send({ data: "User not registered" });
