@@ -8,7 +8,7 @@ ProductRoute.delete("/product/:id", del)
 ProductRoute.delete("/cart/:id", cart_del)
 ProductRoute.get("/product/:id", edite)
 ProductRoute.put("/product/:id", edite_post)
-ProductRoute.get("/cart", validation, Auth, cart)
+ProductRoute.get("/cart", cart)
 ProductRoute.post("/cart/:id", validation, cart_post)
 ProductRoute.get("/single/:id", singledata)
 module.exports = ProductRoute
