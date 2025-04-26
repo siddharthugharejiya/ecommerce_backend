@@ -14,7 +14,7 @@ const Form = async (req, res) => {
       return res.status(400).send({ data: "User already exists" });
     }
 
-    if (role === "admin" && process.env.ADMIN_SECRET_KEY !== secretkey) {
+    if (role === "admin" && process.env.adminsecretkey !== secretkey) {
       return res.status(403).send({ data: "You are not authorized" });
     }
 
@@ -29,7 +29,7 @@ const Form = async (req, res) => {
   }
 };
 
- const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
