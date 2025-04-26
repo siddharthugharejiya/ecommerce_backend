@@ -65,8 +65,8 @@ const edite_post = async (req, res) => {
 }
 const cart = async (req, res) => {
   try {
-    const userId = req.user.id
-    const cartItems = await CartModel.find({ userId })
+
+    const cartItems = await CartModel.find()
     res.status(200).send({ cartItems });
   } catch (error) {
     console.error("Error fetching cart items:", error);
