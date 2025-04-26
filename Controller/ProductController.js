@@ -14,10 +14,10 @@ const addproduct = async (req, res) => {
       subcategory,
       adminId: req.user.id,
     };
-   
+
     const data = await ProductModel.create(product);
-   const userRole = req.user.userRole
-    res.status(201).send({ data,userRole })
+    const userRole = req.user.userRole
+    res.status(201).send({ data, userRole })
   } catch (error) {
     res.status(400).send({ message: error.message })
   }
@@ -25,12 +25,12 @@ const addproduct = async (req, res) => {
 
 const Getproduct = async (req, res) => {
   try {
-    
+
     const data = await ProductModel.find()
 
-   return res.status(200).send({ data })
+    return res.status(200).send({ data })
   } catch (error) {
-   return res.status(400).send({ message: error.message });
+    return res.status(400).send({ message: error.message });
   }
 }
 const del = async (req, res) => {
@@ -48,7 +48,7 @@ const edite = async (req, res) => {
     const { id } = req.params
     const data = await ProductModel.findById(id)
     // console.log(data);
-      res.send({ data })
+    res.send({ data })
   } catch (error) {
     console.log(error);
 
@@ -63,22 +63,23 @@ const edite_post = async (req, res) => {
 
   }
 }
-const cart = async (req,res) =>{
+const cart = async (req, res) => {
   try {
-    const cartItems = await CartModel.find()
+    const userId = req.user.id
+    const cartItems = await CartModel.find({ userId })
     res.status(200).send({ cartItems });
   } catch (error) {
     console.error("Error fetching cart items:", error);
     res.status(500).send({ message: error.message });
   }
 }
-const cart_del = async (req,res) =>{
+const cart_del = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("this is bakend id ",id);
-    
+    console.log("this is bakend id ", id);
+
     const data = await CartModel.findByIdAndDelete(id);
-    
+
     if (!data) {
       return res.status(404).send({ message: "Item not found" });
     }
@@ -94,7 +95,7 @@ const cart_post = async (req, res) => {
   const product = req.body;
 
   try {
-   
+
 
     const existingCartItem = await CartModel.findOne({ userId: id, productId: product._id });
 
@@ -123,17 +124,17 @@ const cart_post = async (req, res) => {
 
 
 
-const singledata = async(req,res) =>{
+const singledata = async (req, res) => {
   const { id } = req.params;
   try {
-      const data = await ProductModel.findById(id);
-      if (!data) {
-          return res.status(404).send({ message: "Product not found" });
-      }
-      res.send({ data });
+    const data = await ProductModel.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+    res.send({ data });
   } catch (error) {
-      res.status(500).send({ message: "Server error" });
+    res.status(500).send({ message: "Server error" });
   }
 }
 
-module.exports = { addproduct, Getproduct, del, edite, edite_post, cart_post , singledata,cart,cart_del}
+module.exports = { addproduct, Getproduct, del, edite, edite_post, cart_post, singledata, cart, cart_del }
