@@ -2,19 +2,19 @@ const jwt = require("jsonwebtoken");
 
 const validation = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(`Received Token: ${token}`);
+  console.log(`Received Token: ${token}`)
 
   if (token) {
     try {
       const extractedToken = token.split(" ")[1];
       console.log(`Extracted Token: ${extractedToken}`);
 
-      const decoded = jwt.verify(extractedToken, "SID");
-      console.log("Decoded Token:", decoded);
+      const decoded = jwt.verify(extractedToken, "SID")
+      console.log("Decoded Token:", decoded)
 
-      req.user = { userId: decoded.userId, userRole: decoded.userRole };
-      console.log("req.user:", req.user); 
-      next();
+     req.user = { userId: decoded.userId, userRole: decoded.userRole }
+      console.log("req.user:", req.user)
+      next()
     } catch (error) {
       console.error("Token Verification Error:", error.message);
       res.status(401).send({ msg: "Invalid Token" });
@@ -38,6 +38,6 @@ const Auth = (req, res, next) => {
   } catch (error) {
    return  res.status(401).json({ message: 'your not authorazetion' });
   }
-};
+}
 
 module.exports = { validation, Auth };
